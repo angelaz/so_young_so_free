@@ -1,6 +1,6 @@
 Meteor.startup(function() {
 
-    Future = Npm.require('fibers/future');
+    var Future = Npm.require('fibers/future');
 
     Meteor.methods({
         getCalendarList: function() {

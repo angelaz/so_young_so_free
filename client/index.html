@@ -5,7 +5,12 @@
 <body>
     {{> header}}
     {{> index_loggedin}}
-    {{> calendar }}
+
+    <div class="container">
+      {{> calendar_intro }}
+      {{> calendar }}
+      {{> calendar_outro }}
+  </div>
 </body>
 
 <template name="header">

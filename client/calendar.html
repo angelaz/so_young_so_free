@@ -1,10 +1,13 @@
+<template name="calendar_intro">
+  <h3>Free times for Sashko Stubailo</h3>
+</template>
+
 <template name="calendar">
   <div class="calendar">
-    Hi, I'm the calendar template!
     <ol class="days">
-      {{#each day in days }}
+      {{#each days }}
         <li>
-        <strong> {{format_date date format="dddd, MMM Do YYYY"}} </strong>
+        <strong> {{format_date date "dddd, MMM Do, YYYY"}} </strong>
           <ol class="events">
             {{#each free_times }}
               <li>{{name}}</li>
@@ -13,5 +16,11 @@
         </li>
       {{/each }}
     </ol>
+  </div>
+</template>
+
+<template name="calendar_outro">
+  <div class="below_calendar">
+    <p>I used WhenAmIFree.com to generate this list of times for you from all of my Google Calendars!</p>
   </div>
 </template>

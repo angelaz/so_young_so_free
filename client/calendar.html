@@ -2,9 +2,9 @@
   <div class="calendar">
     Hi, I'm the calendar template!
     <ol class="days">
-      {{#each day in days }}
+      {{#each days }}
         <li>
-        <strong> {{format_date date format="dddd, MMM Do YYYY"}} </strong>
+        <strong> {{format_date date "dddd, MMM Do, YYYY"}} </strong>
           <ol class="events">
             {{#each free_times }}
               <li>{{name}}</li>

@@ -1,6 +1,6 @@
-Template.calendar.format_date = function(date, options) {
-    return moment(date).format(options.format);
-};
+Handlebars.registerHelper("format_date", function(date, format) {
+    return moment(date).format(format);
+});
 
 Template.calendar.days = function () {
   return [

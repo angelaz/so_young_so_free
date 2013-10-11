@@ -1,0 +1,6 @@
+{ 
+   "public" : {
+       "google_calendar_api_key":"AIzaSyBOK3i-5TR1Yg9IxxadJJedXdQW-CwvY70",
+       "google_calendar_api_url": "https://www.googleapis.com/calendar/v3/users/me/calendarList?maxResults=100&key="
+   }
+}

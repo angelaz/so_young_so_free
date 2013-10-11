@@ -23,19 +23,25 @@ Template.user_loggedin.events({
                 //alert('logged out');
             }
         });
-    },
-
-    "click #getCalendar": function(e, tmpl) {
-        Meteor.http.get("https://www.googleapis.com/calendar/v3/users/me/calendarList?maxResults=100&key=AIzaSyBOK3i-5TR1Yg9IxxadJJedXdQW-CwvY70", {
-            headers: {
-              "Authorization": 'ya29.AHES6ZSHC2hguOO64Ho78L7rxCOce48-fY7y0mtLv_GTMg'
-            },
-            params: {
-              access_token: 'ya29.AHES6ZSHC2hguOO64Ho78L7rxCOce48-fY7y0mtLv_GTMg'
-            }
-        }, function(error, result) {
-            alert(console);
-            window.console.log(result);
-        });
     }
 });
+
+
+Meteor.call('getCalendarList', function(err, response) {
+    Session.set('serverCalendarListResponse', response);
+    var calendarListResponse = response['data']['items'];
+
+    var calendars = calendarListResponse.map(function(item) {
+        return {
+            summary: item.summary,
+            id: item.id
+        };
+    })
+    console.log(calendars);
+
+    Session.set('calendarList', calendars);
+});
+
+Template.index_loggedin.calendars = function () {
+    return Session.get('calendarList');
+};

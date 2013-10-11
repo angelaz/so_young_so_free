@@ -14,6 +14,44 @@ Template.calendar.days = function () {
   ];
 };
 
+var calendarList = function() {
+    Meteor.call('getCalendarList', function(err, response) {
+        Session.set('serverCalendarListResponse', response);
+        var calendarListResponse = response['data']['items'];
+        var calendars = calendarListResponse.map(function(item) {
+            return {
+                summary: item.summary,
+                id: item.id
+            };
+        })
+        Session.set('calendarList', calendars);
+    });
+};
+
+calendarList();
+
+Template.index_loggedin.calendars = function () {
+    return Session.get('calendarList');
+};
+
+
+Template.index_loggedin.freetime = function () {
+    var timespan = 7
+
+    
+};
+
+
+
+
+
+
+
+
+
+
+//////// AUTHENTICATION
+
 Template.user_loggedout.events({
     "click #login": function(e, tmpl){
         Meteor.loginWithGoogle({
@@ -41,23 +79,3 @@ Template.user_loggedin.events({
         });
     }
 });
-
-
-Meteor.call('getCalendarList', function(err, response) {
-    Session.set('serverCalendarListResponse', response);
-    var calendarListResponse = response['data']['items'];
-
-    var calendars = calendarListResponse.map(function(item) {
-        return {
-            summary: item.summary,
-            id: item.id
-        };
-    })
-    console.log(calendars);
-
-    Session.set('calendarList', calendars);
-});
-
-Template.index_loggedin.calendars = function () {
-    return Session.get('calendarList');
-};

@@ -1,3 +1,19 @@
+Template.calendar.format_date = function(date, options) {
+    return moment(date).format(options.format);
+};
+
+Template.calendar.days = function () {
+  return [
+    {
+      date: moment(),
+      free_times: [
+        {name: "first event"},
+        {name: "second event"}
+      ]
+    }
+  ];
+};
+
 Template.user_loggedout.events({
     "click #login": function(e, tmpl){
         Meteor.loginWithGoogle({

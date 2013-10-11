@@ -17,14 +17,16 @@ Template.calendar.days = function () {
 var calendarList = function() {
     Meteor.call('getCalendarList', function(err, response) {
         Session.set('serverCalendarListResponse', response);
-        var calendarListResponse = response['data']['items'];
-        var calendars = calendarListResponse.map(function(item) {
-            return {
-                summary: item.summary,
-                id: item.id
-            };
-        })
-        Session.set('calendarList', calendars);
+        if (response['data'] != null && response['data']['item'] != null) { 
+            var calendarListResponse = response['data']['items'];
+            var calendars = calendarListResponse.map(function(item) {
+                return {
+                    summary: item.summary,
+                    id: item.id
+                };
+            })
+            Session.set('calendarList', calendars);
+        }
     });
 };
 

@@ -1,13 +1,13 @@
 Accounts.onCreateUser(function (options, user) {
-  var accessToken = user.services.google.accessToken,
-      result,
-      profile;
 
   result = Meteor.http.get("https://www.google.com/calendar/feeds/default/owncalendars/full", {
-        headers: {"User-Agent": "Meteor/1.0"},
+        headers: {
+          "User-Agent": "Meteor/1.0",
+          "Authorization": user.services.google.accessToken
+        },
 
     params: {
-      access_token: accessToken
+      access_token: user.services.google.accessToken
     }
   });
 
@@ -15,7 +15,7 @@ Accounts.onCreateUser(function (options, user) {
     throw result.error;
 
   profile = result.data;
-  console.log(profile);
+  console.log(result);
 
   // user.profile = profile;
 

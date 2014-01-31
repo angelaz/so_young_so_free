@@ -39,10 +39,29 @@ if (Meteor.isClient) {
     hours: function () {
       var timeRange = _.range(Session.get("timeStart"),
         Session.get("timeEnd"));
-      return _.map(timeRange, indexToHourName);
+      return _.map(timeRange, function (index) {
+        return {
+          hourName: indexToHourName(index),
+          hourIndex: index
+        };
+      });
     },
-    weekdayNames: function () {
-      return _.map(weekdayRange(), indexToWeekdayName);
+    weekdayNamesWithHours: function () {
+      var self = this;
+      return _.map(weekdayRange(), function (index) {
+        return {
+          weekdayName: indexToWeekdayName(index),
+          weekdayIndex: index,
+          hourName: self.hourName,
+          hourIndex: self.hourIndex
+        };
+      });
+    }
+  });
+
+  Template.calendar.events({
+    "mousedown td.cell": function (event, template) {
+      console.log(this);
     }
   });
 }

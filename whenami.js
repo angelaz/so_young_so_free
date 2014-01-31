@@ -1,19 +1,48 @@
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to whenami.";
+  Session.set("timeStart", 8);
+  Session.set("timeEnd", 19);
+  Session.set("workWeek", false);
+
+  var weekdayRange = function () {
+    if (Session.get("workWeek")) {
+        return _.range(1, 6);
+    }
+
+    return _.range(7);
   };
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
-}
+  var indexToWeekdayName = function (index) {
+    return [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ][index];
+  };
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+  var indexToHourName = function (index) {
+    if (index === 0) {
+      return "12 am";
+    } else if (index === 12) {
+      return "12 pm";
+    } else if (index < 12) {
+      return index + " am";
+    } else {
+      return (index - 12) + " pm";
+    }
+  };
+
+  Template.calendar.helpers({
+    hours: function () {
+      var timeRange = _.range(Session.get("timeStart"),
+        Session.get("timeEnd"));
+      return _.map(timeRange, indexToHourName);
+    },
+    weekdayNames: function () {
+      return _.map(weekdayRange(), indexToWeekdayName);
+    }
   });
 }

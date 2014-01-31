@@ -1,26 +1,13 @@
+var Events = new Meteor.Collection("events");
+
 if (Meteor.isClient) {
   Session.set("timeStart", 8);
   Session.set("timeEnd", 19);
-  Session.set("workWeek", false);
 
-  var weekdayRange = function () {
-    if (Session.get("workWeek")) {
-        return _.range(1, 6);
-    }
-
-    return _.range(7);
-  };
-
-  var indexToWeekdayName = function (index) {
-    return [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ][index];
+  var dateRange = function () {
+    return _.map(_.range(7), function (index) {
+      return moment().startOf("day").add("days", index);
+    });
   };
 
   var indexToHourName = function (index) {
@@ -46,21 +33,26 @@ if (Meteor.isClient) {
         };
       });
     },
-    weekdayNamesWithHours: function () {
-      var self = this;
-      return _.map(weekdayRange(), function (index) {
-        return {
-          weekdayName: indexToWeekdayName(index),
-          weekdayIndex: index,
-          hourName: self.hourName,
-          hourIndex: self.hourIndex
-        };
+    dateRange: dateRange,
+    moments: function (hourIndex) {
+      return _.map(dateRange(), function (date) {
+        return date.add("hours", hourIndex);
       });
+    },
+    dayName: function () {
+      return this.format("ddd, MMM D");
     }
   });
 
+  var addToCalendar = function (startTime, endTime) {
+    Events.insert({
+      startTime: startTime,
+      endTime: endTime
+    });
+  };
+
   Template.calendar.events({
-    "mousedown td.cell": function (event, template) {
+    "mousedown .cell": function () {
       console.log(this);
     }
   });

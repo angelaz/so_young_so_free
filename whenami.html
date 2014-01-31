@@ -4,7 +4,7 @@
 
 <body>
   <div class="container">
-    <h1>When Am I Free?</h1>
+    <h1>When Am I Free This Week?</h1>
     {{> calendar}}
   </div>
 </body>
@@ -16,14 +16,14 @@
     <table>
       <tr>
         <th>Time</th>
-        {{#each weekdayNames}}
-          <th>{{this}}</th>
+        {{#each dateRange}}
+          <th>{{dayName}}</th>
         {{/each}}
       </tr>
       {{#each hours}}
         <tr>
           <td class="time">{{hourName}}</td>
-          {{#each weekdayNamesWithHours}}
+          {{#each moments hourIndex}}
             <td class="cell"></td>
           {{/each}}
         </tr>

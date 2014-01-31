@@ -3,11 +3,29 @@
 </head>
 
 <body>
-  <div class="container">
-    <h1>When Am I Free This Week?</h1>
-    {{> calendar}}
-  </div>
+  {{> body}}
 </body>
+
+<template name="body">
+  <div class="container">
+    
+    <h1>When Am I Free This Week?</h1>
+    <div>
+      {{loginButtons}}
+      {{#if currentUser}}
+        <button class="btn btn-primary import">Refresh Calendar List</button>
+      {{/if}}
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        {{> calendarList}}
+      </div>
+      <div class="col-md-8">
+        {{> calendar}}
+      </div>
+    </div>
+  </div>
+</template>
 
 <template name="calendar">
   {{! weekly calendar template}}
@@ -30,4 +48,18 @@
       {{/each}}
     </table>
   </div>
+</template>
+
+<template name="calendarList">
+  <ul class="calendar-list">
+    {{#each calendars}}
+      <li style="background-color: {{backgroundColor}};
+        color: {{foregroundColor}};">
+        <label>
+          <input type="checkbox" />
+          {{summary}}
+        </label>
+      </li>
+    {{/each}}
+  </ul>
 </template>

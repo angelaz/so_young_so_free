@@ -10,3 +10,6 @@ preserve-inputs
 less
 bootstrap-3
 moment
+accounts-ui
+accounts-google
+http
